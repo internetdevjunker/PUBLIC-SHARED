@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin:0; background:#000; display:flex; justify-content:center; align-items:center; height:100vh; overflow:hidden; }
+    video { width:100%; height:100%; object-fit:contain; }
+    #unmute-btn {
+      position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+      padding:20px 40px; font-size:20px; cursor:pointer; z-index:10; color:#fff;
+      background:rgba(0,0,0,0.6); border:none; border-radius:8px;
+    }
+  </style>
+</head>
+<body>
+  <video id="video" autoplay muted playsinline controls>
+    <source src="https://drive.google.com/uc?export=download&id=1LyMj0kAZB_w-szLzVwGV42KDYpI5URZ5" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <button id="unmute-btn">Tap to unmute & fullscreen</button>
+
+  <script>
+    const video = document.getElementById('video');
+    const btn = document.getElementById('unmute-btn');
+
+    btn.onclick = () => {
+      video.muted = false;      // unmute
+      video.play();             // start playback
+      video.requestFullscreen?.(); // try fullscreen
+      btn.style.display = 'none';
+    };
+  </script>
+</body>
+</html>
