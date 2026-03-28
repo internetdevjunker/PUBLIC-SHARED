@@ -19,43 +19,47 @@
       height:100%;
       object-fit:contain;
     }
-    #unmute-btn {
+    #play-btn {
       position:absolute;
       top:50%;
       left:50%;
       transform:translate(-50%, -50%);
-      padding:15px 30px;
-      font-size:18px;
+      padding:20px 40px;
+      font-size:20px;
       cursor:pointer;
       z-index:10;
       color:#fff;
-      background:rgba(0,0,0,0.5);
+      background:rgba(0,0,0,0.6);
       border:none;
-      border-radius:6px;
+      border-radius:8px;
       transition:0.2s;
     }
-    #unmute-btn:hover {
-      background:rgba(0,0,0,0.7);
+    #play-btn:hover {
+      background:rgba(0,0,0,0.8);
     }
   </style>
 </head>
 <body>
-  <video id="video" autoplay muted playsinline controls>
+
+  <!-- Video element points to Google Drive direct download -->
+  <video id="video" playsinline controls>
     <source src="https://drive.google.com/uc?export=download&id=1LyMj0kAZB_w-szLzVwGV42KDYpI5URZ5" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
-  <button id="unmute-btn">Tap to unmute & fullscreen</button>
+  <!-- Single tap button -->
+  <button id="play-btn">Tap here to play video</button>
 
   <script>
     const video = document.getElementById('video');
-    const btn = document.getElementById('unmute-btn');
+    const btn = document.getElementById('play-btn');
 
     btn.onclick = () => {
-      video.muted = false;          // unmute
-      video.play();                 // ensure playback starts
-      btn.style.display = 'none';   // remove button
-      // attempt fullscreen
+      // Start playback unmuted
+      video.muted = false;
+      video.play().catch(err => console.log("Playback failed:", err));
+
+      // Request fullscreen
       if(video.requestFullscreen) {
         video.requestFullscreen();
       } else if(video.webkitRequestFullscreen) { // Safari
@@ -63,6 +67,9 @@
       } else if(video.msRequestFullscreen) { // IE/Edge
         video.msRequestFullscreen();
       }
+
+      // Hide the button
+      btn.style.display = 'none';
     };
   </script>
 </body>
